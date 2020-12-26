@@ -3,10 +3,7 @@ package arm;
 import iron.system.Input;
 
 class InputAction {
-
 	public function new() {}
-
-	var inputType: String;
 
 	var keyboard: Keyboard = Input.getKeyboard();
 	var keyboardInputs: Array<String> = [];
@@ -49,57 +46,35 @@ class InputAction {
 		}
 	}
 
-	public function started(): Bool {
-	// Keyboard
-		for (keyboardInput in keyboardInputs) {
-			if (keyboard.started(keyboardInput)) return true;
+	public function started() {
+		for (k in keyboardInputs) {
+			if (keyboard.started(k)) return true;
 		}
 
-	// Mouse
-		for (mouseInput in mouseInputs) {
-			if (mouse.started(mouseInput)) return true;
+		for (m in mouseInputs) {
+			if (mouse.started(m)) return true;
 		}
 
-	// Gamepad
-		for (gamepadInput in gamepadInputs) {
-			if (gamepad.started(gamepadInput)) return true;
+		for (g in gamepadInputs) {
+			if (gamepad.started(g)) return true;
 		}
+
 		return false;
 	}
 
-	public function down(): Bool {
-	// Keyboard
-		for (keyboardInput in keyboardInputs) {
-			if (keyboard.down(keyboardInput)) return true;
+	public function released() {
+		for (k in keyboardInputs) {
+			if (keyboard.released(k)) return true;
 		}
 
-	// Mouse
-		for (mouseInput in mouseInputs) {
-			if (mouse.down(mouseInput)) return true;
+		for (m in mouseInputs) {
+			if (mouse.released(m)) return true;
 		}
 
-	// Gamepad
-		for (gamepadInput in gamepadInputs) {
-			if (gamepad.down(gamepadInput)) return true;
-		}
-		return false;
-	}
-
-	public function released(): Bool {
-	// Keyboard
-		for (keyboardInput in keyboardInputs) {
-			if (keyboard.released(keyboardInput)) return true;
+		for (g in gamepadInputs) {
+			if (gamepad.released(g)) return true;
 		}
 
-	// Mouse
-		for (mouseInput in mouseInputs) {
-			if (mouse.released(mouseInput)) return true;
-		}
-
-	// Gamepad
-		for (gamepadInput in gamepadInputs) {
-			if (gamepad.released(gamepadInput)) return true;
-		}
 		return false;
 	}
 }
