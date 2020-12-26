@@ -3,78 +3,74 @@ package arm;
 import iron.system.Input;
 
 class InputAction {
+
+	var keyboard = Input.getKeyboard();
+	var mouse = Input.getMouse();
+	var gamepad = Input.getGamepad();
+
 	public function new() {}
 
-	var keyboard: Keyboard = Input.getKeyboard();
-	var keyboardInputs: Array<String> = [];
+	var keyboardInputs: Array<InputEntry> = [];
+	var mouseInputs: Array<InputEntry> = [];
+	var gamepadInputs: Array<InputEntry> = [];
 
-	var mouse: Keyboard = Input.getKeyboard();
-	var mouseInputs: Array<String> = [];
-
-	var gamepad: Keyboard = Input.getKeyboard();
-	var gamepadInputs: Array<String> = [];
-
-	public function setInputs(inputType: String, inputs: Array<String>) {
-		switch (inputType) {
-			case "keyboard": keyboardInputs = inputs;
-			case "mouse": mouseInputs = inputs;
-			case "gamepad": gamepadInputs = inputs;
-		}
+	public function addKeyboardInput(key: String, ?modifiers: Array<String>) {
+		var m = modifiers == null ? new Array<String>() : modifiers;
+		keyboardInputs.push(new InputEntry(key, m));
 	}
 
-	public function clearInputs(inputType: String) {
-		switch (inputType) {
-			case "keyboard": keyboardInputs = [];
-			case "mouse": mouseInputs = [];
-			case "gamepad": gamepadInputs = [];
-		}
+	public function addMouseInput(key: String, ?modifiers: Array<String>) {
+		var m = modifiers == null ? new Array<String>() : modifiers;
+		mouseInputs.push(new InputEntry(key, m));
 	}
 
-	public function addInput(inputType: String, input: String) {
-		switch (inputType) {
-			case "keyboard": keyboardInputs.push(input);
-			case "mouse": mouseInputs.push(input);
-			case "gamepad": gamepadInputs.push(input);
-		}
-	}
-
-	public function removeInput(inputType: String, input: String) {
-		switch (inputType) {
-			case "keyboard": keyboardInputs.remove(input);
-			case "mouse": mouseInputs.remove(input);
-			case "gamepad": gamepadInputs.remove(input);
-		}
+	public function addGamepadInput(key: String, ?modifiers: Array<String>) {
+		var m = modifiers == null ? new Array<String>() : modifiers;
+		gamepadInputs.push(new InputEntry(key, m));
 	}
 
 	public function started() {
-		for (k in keyboardInputs) {
-			if (keyboard.started(k)) return true;
+		for (input in keyboardInputs) {
+			if (keyboard.started(input.key)) {
+				if (input.testModifiers()) return true;
+			}
 		}
 
-		for (m in mouseInputs) {
-			if (mouse.started(m)) return true;
+		for (input in mouseInputs) {
+			if (mouse.started(input.key)) {
+				if (input.testModifiers()) return true;
+			}
 		}
 
-		for (g in gamepadInputs) {
-			if (gamepad.started(g)) return true;
+		for (input in gamepadInputs) {
+			if (gamepad.started(input.key)) {
+				if (input.testModifiers()) return true;
+			}
 		}
 
 		return false;
 	}
 
 	public function released() {
-		for (k in keyboardInputs) {
-			if (keyboard.released(k)) return true;
+		for (input in keyboardInputs) {
+			if (keyboard.released(input.key)) {
+				if (input.testModifiers()) return true;
+			}
 		}
 
-		for (m in mouseInputs) {
-			if (mouse.released(m)) return true;
+		for (input in mouseInputs) {
+			if (mouse.released(input.key)) {
+				if (input.testModifiers()) return true;
+			}
 		}
 
-		for (g in gamepadInputs) {
-			if (gamepad.released(g)) return true;
+		for (input in gamepadInputs) {
+			if (gamepad.released(input.key)) {
+				if (input.testModifiers()) return true;
+			}
 		}
 
 		return false;
 	}
+
 }
