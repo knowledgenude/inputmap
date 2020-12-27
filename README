@@ -1,0 +1,42 @@
+InputAction class
+
+The `InputAction` class is responsible to handle non continous actions, 
+such as: open door, open menu, activate button.
+
+To create an input action, you should call the `InputAction class constructor`:
+
+`var action = new InputAction();`
+
+The recently created `action` does not have any `input` attached to it. 
+You can understand an `input` as an object that contains a `key` and optionally a `modifier`.
+
+A `modifier` is just another `key` that must be pressed when the primary `key` 
+is pressed or released.
+
+You can set more than one `input` to trigger the same action, see the example:
+
+`action.addKeyboardInput("w");`
+`action.addMouseInput("left");`
+
+In the example above, we just had created two inputs that will trigger the same `action`.
+
+In case you want to create a key binding, just put some keys inside an array in the second
+parameter of the function:
+
+`action.addKeyboardInput("w", ["alt"]);`
+`action.addKeyboardInput("left", ["shift", "alt"]);`
+
+Now the key "w" will be ignored if "alt" is inactive and the key "left" will be ignored
+if "shift" or "alt" are inactive.
+
+To execute the action you can use the `started()` or `released()` functions.
+
+`if (action.started()) { doSomething(); }`
+or
+`if (action.released()) { doSomething(); }`
+
+InputAxis class
+
+The `InputAxis` class is responsible to handle continuous actions like character movement.
+
+TO DO.
