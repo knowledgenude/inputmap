@@ -1,6 +1,12 @@
 package arm;
 
+import iron.system.Input;
+import arm.inputmap.InputAction;
+
 class Test extends iron.Trait {
+
+	var keyboard = Input.getKeyboard();
+	var mouse = Input.getMouse();
 
 	var action1: InputAction;
 
@@ -9,9 +15,10 @@ class Test extends iron.Trait {
 
 		notifyOnInit(function() {
 			action1 = new InputAction();
-			action1.addKeyboardInput("w", ["alt", "shift"]);
-			action1.addKeyboardInput("up", ["alt"]);
-			action1.addMouseInput("left");
+
+			action1.addInput(keyboard, "w");
+			action1.addInput(keyboard, "up", ["alt"]);
+			action1.addInput(mouse, "left");
 		});
 
 		notifyOnUpdate(function() {
