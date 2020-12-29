@@ -7,7 +7,7 @@ class InputConfig {
 	public var key: String;
 	var modifiers: Array<String>;
 
-	public function new(key: String, modifiers: Array<String>) {
+	public function new(key: String, modifiers: Array<String>): Void {
 		this.key = key;
 		this.modifiers = modifiers;
 	}
@@ -23,7 +23,7 @@ class InputConfig {
 
 class KeyboardConfig extends InputConfig {
 
-	public function new(key: String, modifiers: Array<String>) {
+	public function new(key: String, modifiers: Array<String>): Void {
 		super(key, modifiers);
 		this.key = key;
 		this.modifiers = modifiers;
@@ -31,7 +31,7 @@ class KeyboardConfig extends InputConfig {
 
 	var keyboard: Keyboard = Input.getKeyboard();
 
-	public override function pressed() {
+	public override function pressed(): Bool {
 		if (keyboard.started(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {
@@ -45,7 +45,7 @@ class KeyboardConfig extends InputConfig {
 		return false;
 	}
 
-	public override function released() {
+	public override function released(): Bool {
 		if (keyboard.released(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {
@@ -62,7 +62,7 @@ class KeyboardConfig extends InputConfig {
 
 class MouseConfig extends InputConfig {
 
-	public function new(key: String, modifiers: Array<String>) {
+	public function new(key: String, modifiers: Array<String>): Void {
 		super(key, modifiers);
 		this.key = key;
 		this.modifiers = modifiers;
@@ -70,7 +70,7 @@ class MouseConfig extends InputConfig {
 
 	var mouse: Mouse = Input.getMouse();
 
-	public override function pressed() {
+	public override function pressed(): Bool {
 		if (mouse.started(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {
@@ -84,7 +84,7 @@ class MouseConfig extends InputConfig {
 		return false;
 	}
 
-	public override function released() {
+	public override function released(): Bool {
 		if (mouse.released(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {

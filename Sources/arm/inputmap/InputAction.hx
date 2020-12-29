@@ -20,6 +20,10 @@ class InputAction {
 		map.push(input);
 	}
 
+	public function addCustomInput(input: InputConfig): Void {
+		map.push(input);
+	}
+
 	public function removeInput(input: InputConfig): Void {
 		map.remove(input);
 	}

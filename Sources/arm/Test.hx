@@ -1,6 +1,7 @@
 package arm;
 
 import arm.inputmap.InputAction;
+import arm.inputmap.GamepadConfig; // custom input example
 
 class Test extends iron.Trait {
 
@@ -17,6 +18,8 @@ class Test extends iron.Trait {
 
 			action2 = new InputAction();
 			action2.addKeyboardInput("r", ["control"]);
+
+			action1.addCustomInput(new GamepadConfig("cross", ["l1", "r1"])); // add the custom input
 		});
 
 		notifyOnUpdate(function() {
