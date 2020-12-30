@@ -8,20 +8,24 @@ class InputAction {
 
 	var map: Array<InputConfig> = [];
 
-	public function addMouseInput(button: String, ?modifiers: Array<String>): Void {
+	public function addKeyboardInput(key: String, ?modifiers: Array<String>): InputConfig {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		var input: InputConfig = new MouseConfig(button, mod);
-		map.push(input);
+		return addCustomInput(new KeyboardConfig(key, mod));
 	}
 
-	public function addKeyboardInput(key: String, ?modifiers: Array<String>): Void {
+	public function addMouseInput(button: String, ?modifiers: Array<String>): InputConfig {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		var input: InputConfig = new KeyboardConfig(key, mod);
-		map.push(input);
+		return addCustomInput(new MouseConfig(button, mod));
 	}
 
-	public function addCustomInput(input: InputConfig): Void {
+	public function addGamepadInput(button: String, ?modifiers: Array<String>): InputConfig {
+		var mod = modifiers == null ? new Array<String>() : modifiers;
+		return addCustomInput(new GamepadConfig(button, mod));
+	}
+
+	public function addCustomInput(input: InputConfig): InputConfig {
 		map.push(input);
+		return input;
 	}
 
 	public function removeInput(input: InputConfig): Void {
