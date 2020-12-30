@@ -1,56 +1,55 @@
 package arm.inputmap;
 
-import arm.inputmap.InputConfig;
+import arm.inputmap.InputActionElement;
 
 class InputAction {
-
 	public function new(): Void {}
 
-	var map: Array<InputConfig> = [];
+	var elements: Array<InputActionElement> = [];
 
-	public function addKeyboardInput(key: String, ?modifiers: Array<String>): InputConfig {
+	public function addKeyboardElement(key: String, ?modifiers: Array<String>): InputActionElement {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		return addCustomInput(new KeyboardConfig(key, mod));
+		return addCustomElement(new KeyboardActionElement(key, mod));
 	}
 
-	public function addMouseInput(button: String, ?modifiers: Array<String>): InputConfig {
+	public function addMouseElement(button: String, ?modifiers: Array<String>): InputActionElement {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		return addCustomInput(new MouseConfig(button, mod));
+		return addCustomElement(new MouseActionElement(button, mod));
 	}
 
-	public function addGamepadInput(button: String, ?modifiers: Array<String>): InputConfig {
+	public function addGamepadElement(button: String, ?modifiers: Array<String>): InputActionElement {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		return addCustomInput(new GamepadConfig(button, mod));
+		return addCustomElement(new GamepadActionElement(button, mod));
 	}
 
-	public function addCustomInput(input: InputConfig): InputConfig {
-		map.push(input);
-		return input;
+	public function addCustomElement(element: InputActionElement): InputActionElement {
+		elements.push(element);
+		return element;
 	}
 
-	public function removeInput(input: InputConfig): Void {
-		map.remove(input);
+	public function removeElement(element: InputActionElement): Void {
+		elements.remove(element);
 	}
 
-	public function getInputByKey(key: String): InputConfig {
-		for (input in map) {
-			if (input.key == key) return input;
+	public function getElement(key: String): InputActionElement {
+		for (e in elements) {
+			if (e.key == key) return e;
 		}
 
 		return null;
 	}
 
 	public function pressed(): Bool {
-		for (input in map) {
-			if (input.pressed()) return true;
+		for (e in elements) {
+			if (e.pressed()) return true;
 		}
 
 		return false;
 	}
 
 	public function released(): Bool {
-		for (input in map) {
-			if (input.released()) return true;
+		for (e in elements) {
+			if (e.released()) return true;
 		}
 
 		return false;

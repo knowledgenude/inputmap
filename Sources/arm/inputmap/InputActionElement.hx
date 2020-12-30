@@ -2,8 +2,7 @@ package arm.inputmap;
 
 import iron.system.Input;
 
-class InputConfig {
-
+class InputActionElement {
 	public var key: String;
 	var modifiers: Array<String>;
 
@@ -21,8 +20,7 @@ class InputConfig {
 	}
 }
 
-class KeyboardConfig extends InputConfig {
-
+class KeyboardActionElement extends InputActionElement {
 	public function new(key: String, modifiers: Array<String>): Void {
 		super(key, modifiers);
 		this.key = key;
@@ -38,10 +36,8 @@ class KeyboardConfig extends InputConfig {
 					if (!keyboard.down(m)) return false;
 				}
 			}
-
 			return true;
 		}
-
 		return false;
 	}
 
@@ -52,16 +48,13 @@ class KeyboardConfig extends InputConfig {
 					if (!keyboard.down(m)) return false;
 				}
 			}
-
 			return true;
 		}
-
 		return false;
 	}
 }
 
-class MouseConfig extends InputConfig {
-
+class MouseActionElement extends InputActionElement {
 	public function new(key: String, modifiers: Array<String>): Void {
 		super(key, modifiers);
 		this.key = key;
@@ -77,10 +70,8 @@ class MouseConfig extends InputConfig {
 					if (!mouse.down(m)) return false;
 				}
 			}
-
 			return true;
 		}
-
 		return false;
 	}
 
@@ -91,16 +82,13 @@ class MouseConfig extends InputConfig {
 					if (!mouse.down(m)) return false;
 				}
 			}
-
 			return true;
 		}
-
 		return false;
 	}
 }
 
-class GamepadConfig extends InputConfig {
-
+class GamepadActionElement extends InputActionElement {
 	public function new(key: String, modifiers: Array<String>): Void {
 		super(key, modifiers);
 		this.key = key;
@@ -116,10 +104,8 @@ class GamepadConfig extends InputConfig {
 					if (gamepad.down(m) <= 0.0) return false;
 				}
 			}
-
 			return true;
 		}
-
 		return false;
 	}
 
@@ -130,10 +116,8 @@ class GamepadConfig extends InputConfig {
 					if (gamepad.down(m) <= 0.0) return false;
 				}
 			}
-
 			return true;
 		}
-
 		return false;
 	}
 }
