@@ -27,7 +27,7 @@ class InputAction {
 		return element;
 	}
 
-	public inline function removeElement(element: InputActionElement): Void {
+	public function removeElement(element: InputActionElement): Void {
 		elements.remove(element);
 	}
 
