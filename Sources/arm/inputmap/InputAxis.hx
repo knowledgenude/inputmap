@@ -7,27 +7,28 @@ import arm.inputmap.InputAxisElement;
 class InputAxis {
 	public function new(): Void {}
 
-	var elementsX: Array<InputAxisElement> = [];
-	var normalizeX: Bool = false;
-	var scaleX: FastFloat = 1.0;
+	static var elementsX: Array<InputAxisElement> = [];
+	static var normalizeX: Bool = false;
+	static var scaleX: FastFloat = 1.0;
 
-	var elementsY: Array<InputAxisElement> = [];
-	var normalizeY: Bool = false;
-	var scaleY: FastFloat = 1.0;
+	static var elementsY: Array<InputAxisElement> = [];
+	static var normalizeY: Bool = false;
+	static var scaleY: FastFloat = 1.0;
 
-	var elementsZ: Array<InputAxisElement> = [];
-	var normalizeZ: Bool = false;
-	var scaleZ: FastFloat = 1.0;
+	static var elementsZ: Array<InputAxisElement> = [];
+	static var normalizeZ: Bool = false;
+	static var scaleZ: FastFloat = 1.0;
 
-	var vec: Vec4 = new Vec4();
+	static var vec: Vec4 = new Vec4();
+	static var updatedVec: Vec4 = new Vec4();
 
-	public function addKeyboardElement(position: String, positiveKey: String, ?negativeKey: String): InputAxisElement {
+	public inline function addKeyboardElement(position: String, positiveKey: String, ?negativeKey: String): InputAxisElement {
 		var n = negativeKey == null ? "" : negativeKey;
 		
 		return addCustomElement(position, new KeyboardAxisElement(positiveKey, n));
 	}
 
-	public function addCustomElement(position: String, element: InputAxisElement): InputAxisElement {
+	public inline function addCustomElement(position: String, element: InputAxisElement): InputAxisElement {
 		switch (position) {
 			case "x": elementsX.push(element);
 			case "y": elementsY.push(element);
@@ -48,9 +49,9 @@ class InputAxis {
 		normalizeZ = z;
 	}
 
-	public function get(): Vec4 {
+	public inline function get(): Vec4 {
 		update();
-		var updatedVec: Vec4 = new Vec4(vec.x, vec.y, vec.z);
+		updatedVec.set(vec.x, vec.y, vec.z);
 		vec.normalize();
 
 		updatedVec.x = normalizeX == false ? updatedVec.x * scaleX : vec.x * scaleX;
@@ -60,7 +61,7 @@ class InputAxis {
 		return updatedVec;
 	}
 
-	public function update(): Void {
+	static function update(): Void {
 		vec.set(0, 0, 0);
 
 		for (e in elementsX) {

@@ -25,9 +25,9 @@ class KeyboardAxisElement extends InputAxisElement {
 		this.negativeKey = negativeKey;
 	}
 
-	var keyboard: Keyboard = Input.getKeyboard();
+	final keyboard: Keyboard = Input.getKeyboard();
 
-	public override function get(): FastFloat {
+	public inline override function get(): FastFloat {
 		scale = 0.0;
 		if (keyboard.down(positiveKey)) scale += 1.0;
 		if (keyboard.down(negativeKey)) scale -= 1.0;
@@ -42,9 +42,9 @@ class MouseAxisElement extends InputAxisElement {
 		this.negativeKey = negativeKey;
 	}
 
-	var mouse: Mouse = Input.getMouse();
+	final mouse: Mouse = Input.getMouse();
 
-	public override function get(): FastFloat {
+	public inline override function get(): FastFloat {
 		scale = 0.0;
 		if (mouse.down(positiveKey)) scale += 1.0;
 		if (mouse.down(negativeKey)) scale -= 1.0;

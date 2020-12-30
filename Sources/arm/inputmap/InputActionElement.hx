@@ -27,9 +27,9 @@ class KeyboardActionElement extends InputActionElement {
 		this.modifiers = modifiers;
 	}
 
-	var keyboard: Keyboard = Input.getKeyboard();
+	final keyboard: Keyboard = Input.getKeyboard();
 
-	public override function pressed(): Bool {
+	public inline override function pressed(): Bool {
 		if (keyboard.started(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {
@@ -41,7 +41,7 @@ class KeyboardActionElement extends InputActionElement {
 		return false;
 	}
 
-	public override function released(): Bool {
+	public inline override function released(): Bool {
 		if (keyboard.released(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {
@@ -61,9 +61,9 @@ class MouseActionElement extends InputActionElement {
 		this.modifiers = modifiers;
 	}
 
-	var mouse: Mouse = Input.getMouse();
+	final mouse: Mouse = Input.getMouse();
 
-	public override function pressed(): Bool {
+	public inline override function pressed(): Bool {
 		if (mouse.started(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {
@@ -75,7 +75,7 @@ class MouseActionElement extends InputActionElement {
 		return false;
 	}
 
-	public override function released(): Bool {
+	public inline override function released(): Bool {
 		if (mouse.released(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {
@@ -95,9 +95,9 @@ class GamepadActionElement extends InputActionElement {
 		this.modifiers = modifiers;
 	}
 
-	var gamepad: Gamepad = Input.getGamepad();
+	final gamepad: Gamepad = Input.getGamepad();
 
-	public override function pressed(): Bool {
+	public inline override function pressed(): Bool {
 		if (gamepad.started(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {
@@ -109,7 +109,7 @@ class GamepadActionElement extends InputActionElement {
 		return false;
 	}
 
-	public override function released(): Bool {
+	public inline override function released(): Bool {
 		if (gamepad.released(key)) {
 			if (modifiers.length > 0) {
 				for (m in modifiers) {
