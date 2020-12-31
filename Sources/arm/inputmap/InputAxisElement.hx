@@ -51,3 +51,20 @@ class MouseAxisElement extends InputAxisElement {
 		return scale;
 	}
 }
+
+class GamepadAxisElement extends InputAxisElement {
+	public function new(positiveKey: String, negativeKey: String): Void {
+		super(positiveKey, negativeKey);
+		this.positiveKey = positiveKey;
+		this.negativeKey = negativeKey;
+	}
+
+	final gamepad: Gamepad = Input.getGamepad();
+
+	public inline override function get(): FastFloat {
+		scale = 0.0;
+		if (gamepad.down(positiveKey) > 0.0) scale += 1.0;
+		if (gamepad.down(negativeKey) > 0.0) scale -= 1.0;
+		return scale;
+	}
+}

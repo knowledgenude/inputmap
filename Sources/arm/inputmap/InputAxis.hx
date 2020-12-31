@@ -28,6 +28,18 @@ class InputAxis {
 		return addCustomElement(position, new KeyboardAxisElement(positiveKey, n));
 	}
 
+	public inline function addMouseElement(position: String, positiveButton: String, ?negativeButton: String): InputAxisElement {
+		var n = negativeButton == null ? "" : negativeButton;
+		
+		return addCustomElement(position, new MouseAxisElement(positiveButton, n));
+	}
+
+	public inline function addGamepadElement(position: String, positiveButton: String, ?negativeButton: String): InputAxisElement {
+		var n = negativeButton == null ? "" : negativeButton;
+		
+		return addCustomElement(position, new GamepadAxisElement(positiveButton, n));
+	}
+
 	public inline function addCustomElement(position: String, element: InputAxisElement): InputAxisElement {
 		switch (position) {
 			case "x": elementsX.push(element);
@@ -61,19 +73,19 @@ class InputAxis {
 		return updatedVec;
 	}
 
-	static function update(): Void {
+	function update(): Void {
 		vec.set(0, 0, 0);
 
 		for (e in elementsX) {
-			if (e.get() != 0.0) vec.x = e.get();
+			if (e.get() != 0.0) vec.x += e.get();
 		}
 
 		for (e in elementsY) {
-			if (e.get() != 0.0) vec.y = e.get();
+			if (e.get() != 0.0) vec.y += e.get();
 		}
 
 		for (e in elementsZ) {
-			if (e.get() != 0.0) vec.z = e.get();
+			if (e.get() != 0.0) vec.z += e.get();
 		}
 	}
 }

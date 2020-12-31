@@ -20,6 +20,7 @@ class InputAxisTest extends iron.Trait {
 
 			move.addKeyboardElement("y", "w", "s");
 			move.addKeyboardElement("x", "d", "a");
+			move.addMouseElement("x", "right", "left");
 
 			move.setNormalize(true, true, true);
 			move.setScale(5.0, 5.0, 5.0);
