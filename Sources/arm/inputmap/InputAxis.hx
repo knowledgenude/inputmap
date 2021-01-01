@@ -2,51 +2,79 @@ package arm.inputmap;
 
 import kha.FastFloat;
 import iron.math.Vec4;
-import arm.inputmap.InputAxisElement;
+import arm.inputmap.InputAxisComponent;
 
 class InputAxis {
-	public function new(): Void {}
-
-	static var elementsX: Array<InputAxisElement> = [];
-	static var normalizeX: Bool = false;
 	static var scaleX: FastFloat = 1.0;
+	static var normalizeX: Bool = false;
+	static var componentsX: Map<InputAxisComponent, String>;
 
-	static var elementsY: Array<InputAxisElement> = [];
-	static var normalizeY: Bool = false;
 	static var scaleY: FastFloat = 1.0;
+	static var normalizeY: Bool = false;
+	static var componentsY: Map<InputAxisComponent, String>;
 
-	static var elementsZ: Array<InputAxisElement> = [];
-	static var normalizeZ: Bool = false;
 	static var scaleZ: FastFloat = 1.0;
+	static var normalizeZ: Bool = false;
+	static var componentsZ: Map<InputAxisComponent, String>;
 
 	static var vec: Vec4 = new Vec4();
 	static var updatedVec: Vec4 = new Vec4();
 
-	public inline function addKeyboardElement(position: String, positiveKey: String, ?negativeKey: String): InputAxisElement {
+	var parent: InputMap;
+
+	public function new(parent: InputMap) {
+		this.parent = parent;
+	}
+
+	public function addKeyboardComponent(position: String, tag: String, positiveKey: String, ?negativeKey: String): Void {
 		var n = negativeKey == null ? "" : negativeKey;
-		
-		return addCustomElement(position, new KeyboardAxisElement(positiveKey, n));
+		addCustomComponent(position, new KeyboardAxisComponent(parent, positiveKey, negativeKey), tag);
 	}
 
-	public inline function addMouseElement(position: String, positiveButton: String, ?negativeButton: String): InputAxisElement {
+	public function addMouseComponent(position: String, tag: String, positiveButton: String, ?negativeButton: String): Void {
 		var n = negativeButton == null ? "" : negativeButton;
-		
-		return addCustomElement(position, new MouseAxisElement(positiveButton, n));
+		addCustomComponent(position, new MouseAxisComponent(parent, positiveButton, negativeButton), tag);
 	}
 
-	public inline function addGamepadElement(position: String, positiveButton: String, ?negativeButton: String): InputAxisElement {
+	public function addGamepadComponent(position: String, tag: String, positiveButton: String, ?negativeButton: String): Void {
 		var n = negativeButton == null ? "" : negativeButton;
-		
-		return addCustomElement(position, new GamepadAxisElement(positiveButton, n));
+		addCustomComponent(position, new GamepadAxisComponent(parent, positiveButton, negativeButton), tag);
 	}
 
-	public inline function addCustomElement(position: String, element: InputAxisElement): InputAxisElement {
+	public function addCustomComponent(position: String, component: InputAxisComponent, tag: String): Void {
+		if (parent.currentTag == null) parent.currentTag = tag;
+
+		if (componentsX == null) componentsX = new Map<InputAxisComponent, String>();
+		if (componentsY == null) componentsY = new Map<InputAxisComponent, String>();
+		if (componentsZ == null) componentsZ = new Map<InputAxisComponent, String>();
+
 		switch (position) {
-			case "x": elementsX.push(element);
-			case "y": elementsY.push(element);
-			case "z": elementsZ.push(element);
+			case "x": {
+					componentsX[component] = tag;
+			}
+			case "y": {
+
+					componentsY[component] = tag;
+			}
+			case "z": {
+					componentsZ[component] = tag;
+			}
 		}
-		return element;
+	}
+
+	public function removeComponent(position: String, component: InputAxisComponent): Void {
+		switch (position) {
+			case "x": {
+					componentsX.remove(component);
+			}
+			case "y": {
+
+					componentsY.remove(component);
+			}
+			case "z": {
+					componentsZ.remove(component);
+			}
+		}
 	}
 
 	public function setScale(x: FastFloat, y: FastFloat, z: FastFloat): Void {
@@ -76,16 +104,16 @@ class InputAxis {
 	function update(): Void {
 		vec.set(0, 0, 0);
 
-		for (e in elementsX) {
-			if (e.get() != 0.0) vec.x += e.get();
+		for (component => tag in componentsX) {
+			if (tag == parent.currentTag) vec.x = component.get();
 		}
 
-		for (e in elementsY) {
-			if (e.get() != 0.0) vec.y += e.get();
+		for (component => tag in componentsY) {
+			if (tag == parent.currentTag) vec.y = component.get();
 		}
 
-		for (e in elementsZ) {
-			if (e.get() != 0.0) vec.z += e.get();
+		for (component => tag in componentsZ) {
+			if (tag == parent.currentTag) vec.z = component.get();
 		}
 	}
 }

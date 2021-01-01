@@ -1,57 +1,56 @@
 package arm.inputmap;
 
-import arm.inputmap.InputActionElement;
+import arm.inputmap.InputActionComponent;
 
 class InputAction {
-	public function new(): Void {}
+	static var components: Map<InputActionComponent, String>;
 
-	static var elements: Array<InputActionElement> = [];
+	var parent: InputMap;
 
-	public inline function addKeyboardElement(key: String, ?modifiers: Array<String>): InputActionElement {
+	public function new(parent: InputMap): Void {
+		this.parent = parent;
+	}
+
+	public function addKeyboardComponent(tag: String, key: String, ?modifiers): Void {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		return addCustomElement(new KeyboardActionElement(key, mod));
+		addCustomComponent(new KeyboardActionComponent(parent, key, mod), tag);
 	}
 
-	public inline function addMouseElement(button: String, ?modifiers: Array<String>): InputActionElement {
+	public function addMouseComponent(tag: String, button: String, ?modifiers): Void {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		return addCustomElement(new MouseActionElement(button, mod));
+		addCustomComponent(new MouseActionComponent(parent, button, mod), tag);
 	}
 
-	public inline function addGamepadElement(button: String, ?modifiers: Array<String>): InputActionElement {
+	public function addGamepadComponent(tag: String, button: String, ?modifiers): Void {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		return addCustomElement(new GamepadActionElement(button, mod));
+		addCustomComponent(new GamepadActionComponent(parent, button, mod), tag);
 	}
 
-	public inline function addCustomElement(element: InputActionElement): InputActionElement {
-		elements.push(element);
-		return element;
+	public function addCustomComponent(component: InputActionComponent, tag: String): Void {
+		if (parent.currentTag == null) parent.currentTag = tag;
+		if (components == null) components = new Map<InputActionComponent, String>();
+		components[component] = tag;
 	}
 
-	public function removeElement(element: InputActionElement): Void {
-		elements.remove(element);
-	}
-
-	public inline function getElement(key: String): InputActionElement {
-		for (e in elements) {
-			if (e.key == key) return e;
-		}
-
-		return null;
+	public function removeComponent(component: InputActionComponent): Void {
+		components.remove(component);
 	}
 
 	public function pressed(): Bool {
-		for (e in elements) {
-			if (e.pressed()) return true;
+		for (component => tag in components) {
+			if (tag == parent.currentTag) {
+				if (component.started()) return true;
+			}
 		}
-
 		return false;
 	}
 
 	public function released(): Bool {
-		for (e in elements) {
-			if (e.released()) return true;
+		for (component => tag in components) {
+			if (tag == parent.currentTag) {
+				if (component.released()) return true;
+			}
 		}
-
 		return false;
 	}
 }
