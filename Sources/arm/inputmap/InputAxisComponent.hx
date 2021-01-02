@@ -103,6 +103,14 @@ class GamepadAxisComponent extends InputAxisComponent {
 			default: if (gamepad.down(positiveKey) > parent.pressure) scale++;
 		}
 
+		switch (positiveKey) {
+			case "right stick moved x": if (rightMovX < -parent.deadzone) scale--;
+			case "right stick moved y": if (rightMovY < -parent.deadzone) scale--;
+			case "left stick moved x": if (leftMovX < -parent.deadzone) scale--;
+			case "left stick moved y": if (leftMovY < -parent.deadzone) scale--;
+			default: if (gamepad.down(positiveKey) < -parent.pressure) scale--;
+		}
+
 		return scale;
 	}
 }
