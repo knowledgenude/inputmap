@@ -1,33 +1,39 @@
 package arm.inputmap;
 
+import kha.FastFloat;
 import arm.inputmap.InputActionComponent;
 
 class InputAction {
 	static var components: Map<InputActionComponent, String>;
 
-	var parent: InputMap;
+	final parent: InputMap;
+	public final index: Int;
+	public final deadzone: FastFloat;
+	public final pressure: FastFloat;
 
-	public function new(parent: InputMap): Void {
+	public function new(parent: InputMap, index: Int, pressure: FastFloat, deadzone: FastFloat) {
 		this.parent = parent;
+		this.index = index;
+		this.pressure = pressure;
+		this.deadzone = deadzone;
 	}
 
 	public function addKeyboardComponent(tag: String, key: String, ?modifiers): Void {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		addCustomComponent(new KeyboardActionComponent(parent, key, mod), tag);
+		addCustomComponent(new KeyboardActionComponent(this, key, mod), tag);
 	}
 
 	public function addMouseComponent(tag: String, button: String, ?modifiers): Void {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		addCustomComponent(new MouseActionComponent(parent, button, mod), tag);
+		addCustomComponent(new MouseActionComponent(this, button, mod), tag);
 	}
 
 	public function addGamepadComponent(tag: String, button: String, ?modifiers): Void {
 		var mod = modifiers == null ? new Array<String>() : modifiers;
-		addCustomComponent(new GamepadActionComponent(parent, button, mod), tag);
+		addCustomComponent(new GamepadActionComponent(this, button, mod), tag);
 	}
 
 	public function addCustomComponent(component: InputActionComponent, tag: String): Void {
-		if (parent.currentTag == null) parent.currentTag = tag;
 		if (components == null) components = new Map<InputActionComponent, String>();
 		components[component] = tag;
 	}

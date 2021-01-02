@@ -8,7 +8,7 @@ class Test extends iron.Trait {
 
 	var rb: RigidBody;
 
-	var playerOneInput: InputMap;
+	var input: InputMap;
 
 	public function new() {
 		super();
@@ -16,25 +16,29 @@ class Test extends iron.Trait {
 		notifyOnInit(function() {
 			rb = object.getTrait(RigidBody);
 
-			playerOneInput = new InputMap(0);
+			input = new InputMap(0);
 
-			playerOneInput.createAction("action1");
-			playerOneInput.getAction("action1").addKeyboardComponent("Keyboard", "w", ["control"]);
-			playerOneInput.getAction("action1").addKeyboardComponent("Keyboard", "up");
-			playerOneInput.getAction("action1").addMouseComponent("Keyboard", "left");
-			//playerOneInput.setCurrentTag("Keyboard"); // This is automatically done for the first action/axis added
+			input.createAction("action1");
+			input.getAction("action1").addKeyboardComponent("Keyboard", "w", ["control"]);
+			input.getAction("action1").addKeyboardComponent("Keyboard", "up");
+			input.getAction("action1").addMouseComponent("Keyboard", "left");
+	
+			input.createAxis("move");
+			input.getAxis("move").addKeyboardComponent("y", "Keyboard", "w", "s");
+			input.getAxis("move").addKeyboardComponent("x", "Keyboard", "d", "a");
 
-			playerOneInput.createAxis("move");
-			playerOneInput.getAxis("move").addKeyboardComponent("y", "Keyboard", "w", "s");
-			playerOneInput.getAxis("move").addKeyboardComponent("x", "Keyboard", "d", "a");
-			playerOneInput.getAxis("move").setScale(5.0, 5.0, 5.0);
-			playerOneInput.getAxis("move").setNormalize(true, true, false);
+			input.getAxis("move").addMouseComponent("x", "Keyboard", "right", "left");
+
+			input.getAxis("move").setScale(5.0, 5.0);
+			input.getAxis("move").enableNormalize();
+
+			input.setCurrentTag("Keyboard");
 		});
 
 		notifyOnUpdate(function() {
-			if (playerOneInput.isActionReleased("action1")) trace("action1");
+			if (input.isActionReleased("action1")) trace("action1");
 
-			var moveVec = playerOneInput.getVec("move");
+			var moveVec = input.getVec("move");
 			rb.setLinearVelocity(moveVec.x, moveVec.y, moveVec.z);
 		});
 	}

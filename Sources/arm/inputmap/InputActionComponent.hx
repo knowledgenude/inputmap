@@ -3,11 +3,11 @@ package arm.inputmap;
 import iron.system.Input;
 
 class InputActionComponent {
-	var parent: InputMap;
+	var parent: InputAction;
 	var key: String;
 	var modifiers: Array<String>;
 
-	public function new(parent: InputMap, key: String, modifiers: Array<String>): Void {
+	public function new(parent: InputAction, key: String, modifiers: Array<String>): Void {
 		this.key = key;
 		this.modifiers = modifiers;
 		this.parent = parent;
@@ -26,7 +26,7 @@ class KeyboardActionComponent extends InputActionComponent {
 
 	final keyboard: Keyboard = Input.getKeyboard();
 
-	public function new(parent: InputMap, key: String, modifiers: Array<String>): Void {
+	public function new(parent: InputAction, key: String, modifiers: Array<String>): Void {
 		super(parent, key, modifiers);
 		this.parent = parent;
 		this.key = key;
@@ -58,7 +58,7 @@ class MouseActionComponent extends InputActionComponent {
 
 	final mouse: Mouse = Input.getMouse();
 
-	public function new(parent: InputMap, key: String, modifiers: Array<String>): Void {
+	public function new(parent: InputAction, key: String, modifiers: Array<String>): Void {
 		super(parent, key, modifiers);
 		this.parent = parent;
 		this.key = key;
@@ -90,7 +90,7 @@ class GamepadActionComponent extends InputActionComponent {
 
 	final gamepad: Gamepad;
 
-	public function new(parent: InputMap, key: String, modifiers: Array<String>) {
+	public function new(parent: InputAction, key: String, modifiers: Array<String>) {
 		super(parent, key, modifiers);
 		this.parent = parent;
 		this.key = key;

@@ -6,31 +6,30 @@ import arm.inputmap.InputAxis;
 import arm.inputmap.InputAction;
 
 class InputMap {
-	static var axes: Map<String, InputAxis>;
-	static var actions: Map<String, InputAction>;
+	static var axes = new Map<String, InputAxis>();
+	static var actions = new Map<String, InputAction>();
 
 	public var index: Int;
 	public var currentTag: String;
-	public var pressure: FastFloat;
 
-	public function new(index: Int, ?pressure: FastFloat): Void {
+	public function new(index: Int): Void {
 		this.index = index;
-		var p = pressure == null ? 0.0 : pressure;
-		this.pressure = p;
 	}
 
 	public function setCurrentTag(tag: String): Void {
 		currentTag = tag;
 	}
 
-	public function createAxis(name: String): Void {
-		if (axes == null) axes = new Map<String, InputAxis>();
-		axes[name] = new InputAxis(this);
+	public function createAxis(name: String, ?pressure: FastFloat, ?deadzone: FastFloat): Void {
+		var p = pressure == null ? 0.0 : pressure;
+		var d = deadzone == null ? 0.0 : deadzone;
+		axes[name] = new InputAxis(this, index, p, d);
 	}
 
-	public function createAction(name: String): Void {
-		if (actions == null) actions = new Map<String, InputAction>();
-		actions[name] = new InputAction(this);
+	public function createAction(name: String, ?pressure: FastFloat, ?deadzone: FastFloat): Void {
+		var p = pressure == null ? 0.0 : pressure;
+		var d = deadzone == null ? 0.0 : deadzone;
+		actions[name] = new InputAction(this, index, p, d);
 	}
 
 	public inline function getAxis(name: String): InputAxis {
