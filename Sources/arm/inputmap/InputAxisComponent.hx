@@ -82,12 +82,14 @@ class GamepadAxisComponent extends InputAxisComponent {
 
 	public inline override function get(): FastFloat {
 		scale = 0.0;
-		var rightMovX: FastFloat = gamepad.rightStick.movementX;
-		var rightMovY: FastFloat = gamepad.rightStick.movementY;
-		var leftMovX: FastFloat = gamepad.leftStick.movementX;
-		var leftMovY: FastFloat = gamepad.leftStick.movementY;
-		var rightTrigger: FastFloat = (1 - parent.pressure) / (gamepad.down("r2") - parent.pressure);
-		var leftTrigger: FastFloat = (1 - parent.pressure) / (gamepad.down("l2") - parent.pressure);
+		var rightMovX = gamepad.rightStick.movementX;
+		var rightMovY = gamepad.rightStick.movementY;
+		var leftMovX = gamepad.leftStick.movementX;
+		var leftMovY = gamepad.leftStick.movementY;
+
+		// Avoid division by zero
+		var rightTrigger = gamepad.down("r2") > 0.0 ? (gamepad.down("r2") - parent.pressure) / (1 - parent.pressure): 0.0;
+		var leftTrigger = gamepad.down("l2") > 0.0 ? (gamepad.down("r2") - parent.pressure) / (1 - parent.pressure): 0.0;
 
 		switch (positiveKey) {
 			case "right stick moved x": if (rightMovX > parent.deadzone) scale++;
