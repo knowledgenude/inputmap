@@ -43,25 +43,15 @@ class InputAxis {
 
 	public function addCustomComponent(position: String, component: InputAxisComponent, tag: String): Void {
 		switch (position) {
-			case "x": {
-					componentsX[component] = tag;
-			}
-			case "y": {
-
-					componentsY[component] = tag;
-			}
+			case "x": componentsX[component] = tag;
+			case "y": componentsY[component] = tag;
 		}
 	}
 
 	public function removeComponent(position: String, component: InputAxisComponent): Void {
 		switch (position) {
-			case "x": {
-					componentsX.remove(component);
-			}
-			case "y": {
-
-					componentsY.remove(component);
-			}
+			case "x": componentsX.remove(component);
+			case "y": componentsY.remove(component);
 		}
 	}
 
