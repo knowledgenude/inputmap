@@ -1,6 +1,5 @@
 package arm;
 
-import libraries.FSM;
 import libraries.InputMap;
 
 class Test extends iron.Trait {
