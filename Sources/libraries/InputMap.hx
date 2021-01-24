@@ -218,11 +218,11 @@ class KeyboardCommand extends InputCommand {
 
 		for (k in displacementKeys) {
 			switch (k) {
-				case "movedX": if (movementX > deadzone) axis++;
-				case "movedY": if (movementY > deadzone) axis--;
+				case "moved x": if (movementX > deadzone) axis++;
+				case "moved y": if (movementY > deadzone) axis--;
 				case "wheel": if (wheelDelta < -deadzone) axis++;
-				case "movementX": if (movementX > deadzone) return movementX - deadzone;
-				case "movementY": if (movementY > deadzone) return movementY - deadzone;
+				case "movement x": if (movementX > deadzone) return movementX - deadzone;
+				case "movement y": if (movementY > deadzone) return movementY - deadzone;
 				default: {
 					if (mouse.down(k)) {
 						axis ++;
@@ -234,11 +234,11 @@ class KeyboardCommand extends InputCommand {
 
 		for (m in displacementModifiers) {
 			switch (m) {
-				case "movedX": if (movementX < -deadzone) axis--;
-				case "movedY": if (movementY < -deadzone) axis++;
+				case "moved x": if (movementX < -deadzone) axis--;
+				case "moved y": if (movementY < -deadzone) axis++;
 				case "wheel": if (wheelDelta > deadzone) axis--;
-				case "movementX": if (movementX < -deadzone) return movementX + deadzone;
-				case "movementY": if (movementY < -deadzone) return movementY + deadzone;
+				case "movement x": if (movementX < -deadzone) return movementX + deadzone;
+				case "movement y": if (movementY < -deadzone) return movementY + deadzone;
 				default: {
 					if (mouse.down(m)) {
 						axis --;
@@ -320,27 +320,27 @@ class GamepadCommand extends InputCommand {
 
 		for (k in displacementKeys) {
 			switch(k) {
-			case "rsMoved_x": if (rsMovementX > deadzone) axis++;
-			case "rsMoved_y": if (rsMovementY > deadzone) axis++;
-			case "lsMoved_x": if (lsMovementX > deadzone) axis++;
-			case "lsMoved_y": if (lsMovementY > deadzone) axis++;
-			case "rsMovementX": if (rsMovementX > deadzone) return rsMovementX - deadzone;
-			case "rsMovementY": if (rsMovementY > deadzone) return rsMovementY - deadzone;
-			case "lsMovementX": if (lsMovementX > deadzone) return lsMovementX - deadzone;
-			case "lsMovementY": if (lsMovementY > deadzone) return lsMovementY - deadzone;
+			case "rs moved x": if (rsMovementX > deadzone) axis++;
+			case "rs moved y": if (rsMovementY > deadzone) axis++;
+			case "ls moved x": if (lsMovementX > deadzone) axis++;
+			case "ls moved y": if (lsMovementY > deadzone) axis++;
+			case "rs movement x": if (rsMovementX > deadzone) return rsMovementX - deadzone;
+			case "rs movement y": if (rsMovementY > deadzone) return rsMovementY - deadzone;
+			case "ls movement x": if (lsMovementX > deadzone) return lsMovementX - deadzone;
+			case "ls movement y": if (lsMovementY > deadzone) return lsMovementY - deadzone;
 			}
 		}
 
 		for (m in displacementModifiers) {
 			switch (m) {
-				case "rsMoved_x": if (rsMovementX < -deadzone) axis--;
-				case "rsMoved_y": if (rsMovementY < -deadzone) axis--;
-				case "lsMoved_x": if (lsMovementX < -deadzone) axis--;
-				case "lsMoved_y": if (lsMovementY < -deadzone) axis--;
-				case "rsMovementX": if (rsMovementX < -deadzone) return rsMovementX + deadzone;
-				case "rsMovementY": if (rsMovementY < -deadzone) return rsMovementY + deadzone;
-				case "lsMovementX": if (lsMovementX < -deadzone) return lsMovementX + deadzone;
-				case "lsMovementY": if (lsMovementY < -deadzone) return lsMovementY + deadzone;
+				case "rs moved x": if (rsMovementX < -deadzone) axis--;
+				case "rs moved y": if (rsMovementY < -deadzone) axis--;
+				case "ls moved x": if (lsMovementX < -deadzone) axis--;
+				case "ls moved y": if (lsMovementY < -deadzone) axis--;
+				case "rs movement x": if (rsMovementX < -deadzone) return rsMovementX + deadzone;
+				case "rs movement y": if (rsMovementY < -deadzone) return rsMovementY + deadzone;
+				case "ls movement x": if (lsMovementX < -deadzone) return lsMovementX + deadzone;
+				case "ls movement y": if (lsMovementY < -deadzone) return lsMovementY + deadzone;
 
 			}
 		}
