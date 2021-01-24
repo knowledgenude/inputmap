@@ -9,7 +9,7 @@ class MyInputList {
 	var traceWithMouse = new ActionMap(); // Press 'left' mouse button
 	var moveForward = new AxisMap(); // 'W' and 'S'
 
-	var kMoveForward: KeyboardCommand; // This var is declared here to allow us to set its scale trough a function
+	var kMoveForward: InputCommand; // This var is declared here to allow us to set its scale trough a function
 
 	public function new() {
 		var kTraceSomething1 = traceSomething1.addKeyboard("PC");

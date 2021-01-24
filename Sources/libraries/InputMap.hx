@@ -10,19 +10,18 @@ class InputMap {
 
 	public function addKeyboard(config: String) {
 		var command = new KeyboardCommand();
-		addCustomCommand(command, config);
-		return command;
+		return addCustomCommand(command, config);
 	}
 
 	public function addGamepad(config: String) {
 		var command = new GamepadCommand();
-		addCustomCommand(command, config);
-		return command;
+		return addCustomCommand(command, config);
 	}
 
 	public function addCustomCommand(command: InputCommand, config: String) {
 		if (commands[config] == null) commands[config] = new Array<InputCommand>();
 		commands[config].push(command);
+		return command;
 	}
 }
 
