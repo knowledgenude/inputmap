@@ -1,22 +1,29 @@
 package arm;
 
-import libraries.InputMap;
+import arm.MyInputList;
 
 class Test extends iron.Trait {
-	var input = new InputMap();
+
+	var myInputs = new MyInputList();
+	var debugAxis = false;
 
 	public function new() {
 		super();
 
 		notifyOnInit(function() {
-			var action1 = input.addAction("action1");
-			action1.addKeyboard("space", null, null, "SPACE");
-			action1.addKeyboard("w", null, null, "W KEY");
-			trace(action1.getDisplay(""));
+			myInputs.setMoveForwardScale(5);
 		});
 
 		notifyOnUpdate(function() {
-			if (input.started("action1")) trace("action pressed!");
+			if (myInputs.getTraceSomething1()) trace("You pressed SPACE or ENTER!");
+			if (myInputs.getTraceSomething2()) trace("You pressed CONTROL + ALT!");
+			if (myInputs.getTraceWithMouse()) {
+				trace("You pressed LMB!");
+				debugAxis = !debugAxis;
+			}
+
+			if (debugAxis) 
+				trace(myInputs.getMoveForward() * myInputs.getMoveForwardScale());
 		});
 	}
 }
